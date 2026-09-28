@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IRIS — Intelligent Real-time Inspection System for Conveyor Belt Digital Twin. PS26008 SIH 2026.">
+    <title>IRIS — Conveyor Belt Digital Twin</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>👁</text></svg>">
+</head>
+<body>
+
+<!-- ═══ IMMERSIVE LOADING SCREEN ═══ -->
+<div class="iris-loading-overlay" id="loadingOverlay">
+    <div class="loading-bg-grid"></div>
+    <div class="loading-ambient-glow"></div>
+
+    <div class="loading-card">
+        <!-- Logo Scanner & Ring Animation -->
+        <div class="logo-scanner-container">
+            <div class="scanner-ring ring-saffron"></div>
+            <div class="scanner-ring ring-green"></div>
+            <div class="scanner-pulse"></div>
+            <img src="/static/logo.png" alt="IRIS Emblem Logo" class="loading-logo-img">
+        </div>
+
+        <!-- Header Titles -->
+        <div class="loading-header">
+            <div class="loading-govt-badge">
+                <span class="flag-dot saffron"></span>
+                <span>MINISTRY OF STEEL • GOVT. OF INDIA</span>
+                <span class="flag-dot green"></span>
+            </div>
+            <h1 class="loading-title">IRIS</h1>
+            <div class="loading-subtitle">Intelligent Real-time Inspection System</div>
+            <div class="loading-tag">NMDC Iron-Ore Conveyor Digital Twin • PS26008</div>
+        </div>
+
+        <!-- Progress Bar & Counter -->
+        <div class="loading-progress-container">
+            <div class="loading-progress-bar">
+                <div class="loading-progress-fill" id="loadingProgressFill"></div>
+            </div>
+            <div class="loading-progress-meta">
+                <span class="loading-status-text" id="loadingStatusText">Initializing Core Engines...</span>
+                <span class="loading-percentage" id="loadingPercentage">0%</span>
+            </div>
+        </div>
+
+        <!-- Live Init Steps -->
+        <div class="loading-steps">
+            <div class="step-item active" id="step1">
+                <span class="step-icon">⚙️</span>
+                <span class="step-text">Physics Engine & IS 11592 Dynamics</span>
+                <span class="step-status">LOADED</span>
+            </div>
+            <div class="step-item" id="step2">
+                <span class="step-icon">📡</span>
+                <span class="step-text">Multi-Sensor Telemetry & Kalman Filter</span>
+                <span class="step-status">SYNCING...</span>
+            </div>
+            <div class="step-item" id="step3">
+                <span class="step-icon">🤖</span>
+                <span class="step-text">Vision AI & Neural RUL Predictor</span>
+                <span class="step-status">WAITING</span>
+            </div>
+            <div class="step-item" id="step4">
+                <span class="step-icon">🌐</span>
+                <span class="step-text">WebSocket High-Speed Digital Twin Bridge</span>
+                <span class="step-status">CONNECTING</span>
+            </div>
+        </div>
+
+        <!-- Live Terminal Stream Log -->
+        <div class="loading-terminal-log" id="loadingTerminalLog">
+            [SYS_INIT] Booting IRIS Industrial Digital Twin Suite...
+        </div>
+        
+        <button class="btn btn-outline btn-enter-now" id="btnEnterNow" onclick="dismissLoadingScreen()" style="display:none;margin-top:14px;width:100%;justify-content:center">
+            🚀 ENTER DIGITAL TWIN DASHBOARD
+        </button>
+    </div>
+</div>
+
+<div class="app-layout">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <img src="/static/logo.png" alt="IRIS Logo" class="sidebar-logo-img">
+            <div>
+                <h1>IRIS</h1>
+                <div class="tag"></div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Detection</div>
+                <div class="nav-item active" data-tab="live-detection">
+                    <span class="icon">🎥</span>
+                    <span>Live Detection</span>
+                    <span class="badge badge-live">LIVE</span>
+                </div>
+                <div class="nav-item" data-tab="video-analysis">
+                    <span class="icon">📹</span>
+                    <span>Video Analysis</span>
+                    <span class="badge badge-new">NEW</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Monitoring</div>
+                <div class="nav-item" data-tab="live-monitor">
+                    <span class="icon">📡</span>
+                    <span>Live Monitor</span>
+                </div>
+                <div class="nav-item" data-tab="belt-health">
+                    <span class="icon">🔧</span>
+                    <span>Belt Health</span>
+                </div>
+                <div class="nav-item" data-tab="sensor-lifetime">
+                    <span class="icon">📶</span>
+                    <span>Sensor Lifetime</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Intelligence</div>
+                <div class="nav-item" data-tab="ai-explainability">
+                    <span class="icon">🤖</span>
+                    <span>AI Explainability</span>
+                </div>
+                <div class="nav-item" data-tab="physics-engine">
+                    <span class="icon">⚙️</span>
+                    <span>Physics Engine</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Operations</div>
+                <div class="nav-item" data-tab="reports">
+                    <span class="icon">📋</span>
+                    <span>Reports</span>
+                </div>
+                <div class="nav-item" data-tab="maintenance">
+                    <span class="icon">🔩</span>
+                    <span>Maintenance</span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-status">
+                <div class="status-dot" id="connectionDot"></div>
+                <span id="connectionStatus">Connecting...</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-breadcrumb">
+                IRIS / <span id="tabTitle">Live Detection</span>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-badge badge-streaming" id="streamBadge">
+                    <div class="status-dot"></div>
+                    <span>STREAMING</span>
+                </div>
+                <div class="topbar-badge badge-simulation" id="simBadge" style="display:none">
+                    <span>⚡ SIM MODE</span>
+                </div>
+                <div class="topbar-time" id="currentTime"></div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="content-area">
+
+            <!-- ═══ TAB: Live Detection ═══ -->
+            <div class="tab-content active" id="tab-live-detection">
+                <div class="kpi-grid">
+                    <div class="kpi-card health">
+                        <div class="kpi-label">Health Score</div>
+                        <div class="kpi-value" id="kpiHealth" style="color:var(--green)">100</div>
+                        <div class="kpi-sub">AI + Physics composite</div>
+                    </div>
+                    <div class="kpi-card rul">
+                        <div class="kpi-label">Remaining Useful Life</div>
+                        <div class="kpi-value" id="kpiRUL">500h</div>
+                        <div class="kpi-sub" id="kpiRULSource">Source: damage_budget</div>
+                    </div>
+                    <div class="kpi-card alert">
+                        <div class="kpi-label">Belt Advisory</div>
+                        <div class="kpi-value" id="kpiAdvisory" style="font-size:16px">NORMAL</div>
+                        <div class="kpi-sub" id="kpiAdvisoryMsg">All parameters within limits</div>
+                    </div>
+                    <div class="kpi-card events">
+                        <div class="kpi-label">Damage Events</div>
+                        <div class="kpi-value" id="kpiEvents">0</div>
+                        <div class="kpi-sub" id="kpiSeverity">No active events</div>
+                    </div>
+                </div>
+
+                <div class="grid-60-40">
+                    <!-- Video Feed -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">🎥 Live Feed & Inspection</div>
+                            <div class="btn-group">
+                                <button class="btn btn-outline" onclick="switchToTab('video-analysis')" title="Switch to Video Inspection Playback">📹 Video File</button>
+                                <button class="btn btn-success" id="btnStartCam" onclick="startCamera()">▶ Camera</button>
+                                <button class="btn btn-danger" id="btnStopCam" onclick="stopCamera()" style="display:none">⏹ Stop</button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="video-container" id="liveFeedContainer">
+                                <div class="video-placeholder">
+                                    <div class="icon">📷</div>
+                                    <div>Click Start to enable camera feed</div>
+                                    <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:8px">
+                                        Supports webcam and IP camera sources
+                                    </div>
+                                </div>
+                                <video id="liveVideo" autoplay muted playsinline style="display:none"></video>
+                                <canvas id="liveCanvas" style="display:none"></canvas>
+                                <div class="video-overlay" id="videoOverlay" style="display:none">
+                                    <span id="videoFPS">FPS: --</span>
+                                    <span id="videoLatency">Latency: --ms</span>
+                                    <span id="videoModel">Model: --</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detection Feed -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">🔍 Detection Feed</div>
+                            <span style="font-size:var(--text-xs);color:var(--text-muted)" id="detectionCount">0 events</span>
+                        </div>
+                        <div class="panel-body detection-feed" id="detectionFeed">
+                            <div class="empty-state">
+                                <div class="icon">🔍</div>
+                                <div class="title">No detections yet</div>
+                                <div>Events will appear here in real-time</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detection Statistics -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📊 Multi-Class Defect Statistics</div>
+                        <span style="font-size:var(--text-xs);color:var(--text-muted)">DIN 22101 / ISO 15236</span>
+                    </div>
+                    <div class="panel-body" id="detectionStats">
+                        <div id="statsContent">
+                            <div class="stat-bar-row">
+                                <div class="stat-bar-label">⚡ CRACK</div>
+                                <div class="stat-bar-outer"><div class="stat-bar-inner" id="statCrack" style="width:0%;background:var(--blue)"></div></div>
+                                <div class="stat-bar-value" id="statCrackVal">0</div>
+                            </div>
+                            <div class="stat-bar-row">
+                                <div class="stat-bar-label">💥 TEAR</div>
+                                <div class="stat-bar-outer"><div class="stat-bar-inner" id="statTear" style="width:0%;background:var(--red)"></div></div>
+                                <div class="stat-bar-value" id="statTearVal">0</div>
+                            </div>
+                            <div class="stat-bar-row">
+                                <div class="stat-bar-label">🕳️ SURFACE_DAMAGE</div>
+                                <div class="stat-bar-outer"><div class="stat-bar-inner" id="statDamage" style="width:0%;background:var(--amber)"></div></div>
+                                <div class="stat-bar-value" id="statDamageVal">0</div>
+                            </div>
+                            <div class="stat-bar-row">
+                                <div class="stat-bar-label">📉 SURFACE_WEAR</div>
+                                <div class="stat-bar-outer"><div class="stat-bar-inner" id="statWear" style="width:0%;background:var(--purple)"></div></div>
+                                <div class="stat-bar-value" id="statWearVal">0</div>
+                            </div>
+                            <div class="stat-bar-row">
+                                <div class="stat-bar-label">🔗 SPLICE_GAP</div>
+                                <div class="stat-bar-outer"><div class="stat-bar-inner" id="statSplice" style="width:0%;background:#f97316"></div></div>
+                                <div class="stat-bar-value" id="statSpliceVal">0</div>
+                            </div>
+                            <div class="stat-bar-row">
+                                <div class="stat-bar-label">✂️ EDGE_DAMAGE</div>
+                                <div class="stat-bar-outer"><div class="stat-bar-inner" id="statEdge" style="width:0%;background:#ec4899"></div></div>
+                                <div class="stat-bar-value" id="statEdgeVal">0</div>
+                            </div>
+                            <div class="stat-bar-row">
+                                <div class="stat-bar-label">⚠️ FOREIGN_OBJECT</div>
+                                <div class="stat-bar-outer"><div class="stat-bar-inner" id="statForeign" style="width:0%;background:var(--cyan)"></div></div>
+                                <div class="stat-bar-value" id="statForeignVal">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: Video Analysis ═══ -->
+            <div class="tab-content" id="tab-video-analysis">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📹 Video Upload & Real-Time Inspection</div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline btn-sm" id="btnLoadSampleVideo" onclick="loadSampleConveyorVideo()">
+                                🎬 Load Sample Conveyor Video
+                            </button>
+                            <button class="btn btn-outline btn-sm" id="btnResetUpload" onclick="resetVideoUpload()" style="display:none">
+                                ↺ New Upload
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <!-- Upload Zone -->
+                        <div class="upload-zone" id="uploadZone">
+                            <div class="icon">📁</div>
+                            <div class="title">Drop video here or click to browse</div>
+                            <div class="subtitle">.mp4 .avi .mkv .mov — High-speed Conveyor Belt Inspection</div>
+                            <div style="margin-top:14px;display:flex;justify-content:center;gap:16px;align-items:center;flex-wrap:wrap">
+                                <div style="display:flex;align-items:center;gap:6px">
+                                    <span style="font-size:var(--text-xs);color:var(--text-muted);font-weight:600">🎯 AI Sensitivity:</span>
+                                    <select id="confThresholdSelect" style="background:var(--surface);color:var(--text-primary);border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:var(--text-xs)">
+                                        <option value="0.10">10% (High Sensitivity)</option>
+                                        <option value="0.12" selected>12% (Calibrated for best.pt)</option>
+                                        <option value="0.15">15% (Balanced)</option>
+                                        <option value="0.25">25% (Standard)</option>
+                                        <option value="0.40">40% (Strict)</option>
+                                    </select>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:6px">
+                                    <span style="font-size:var(--text-xs);color:var(--text-muted);font-weight:600">⏱️ Sampling Rate:</span>
+                                    <select id="frameSkipSelect" style="background:var(--surface);color:var(--text-primary);border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:var(--text-xs)">
+                                        <option value="2">Every 2nd Frame (Detailed)</option>
+                                        <option value="5" selected>Every 5th Frame (Recommended)</option>
+                                        <option value="10">Every 10th Frame (Fast)</option>
+                                        <option value="1">Every Frame (Exhaustive)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="file" id="videoFileInput" accept=".mp4,.avi,.mkv,.mov" style="display:none">
+                        </div>
+
+                        <!-- Upload & Processing Progress -->
+                        <div id="uploadProgress" style="display:none;margin-top:16px">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                                <span style="font-size:var(--text-sm);font-weight:600" id="uploadLabel">Processing frames through YOLOv8...</span>
+                                <span style="font-size:var(--text-sm);font-family:var(--font-mono);color:var(--blue)" id="uploadPct">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="uploadBar" style="width:0%"></div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--text-muted);margin-top:4px">
+                                <span id="uploadFrames">0 / 0 frames</span>
+                                <span id="uploadDetectionsFound">0 defects detected</span>
+                            </div>
+                        </div>
+
+                        <!-- Video Results & Live Playback Player -->
+                        <div id="videoResults" style="display:none;margin-top:20px">
+                            <div class="grid-60-40">
+                                <!-- Interactive Video Player with Bounding Box Overlay -->
+                                <div class="panel">
+                                    <div class="panel-header">
+                                        <div class="panel-title" style="display:flex;align-items:center;gap:8px">
+                                            <span>▶ Live Inspection Playback</span>
+                                            <span class="badge badge-live" id="playbackLiveBadge" style="display:none">SYNCED</span>
+                                        </div>
+                                        <div style="font-size:var(--text-xs);font-family:var(--font-mono);color:var(--text-muted)" id="playbackMeta">
+                                            HD 720p • YOLOv8 Active
+                                        </div>
+                                    </div>
+                                    <div class="panel-body" style="padding-bottom:0">
+                                        <!-- Player Container with Overlay Canvas -->
+                                        <div class="video-container" id="videoPlayerContainer">
+                                            <video id="playbackVideo" playsinline preload="auto" crossorigin="anonymous"></video>
+                                            <canvas id="playbackCanvas" class="overlay-canvas"></canvas>
+                                            
+                                            <!-- Dynamic Defect HUD -->
+                                            <div class="defect-hud-badge" id="defectHudBadge">
+                                                <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px">
+                                                    <span id="hudDefectClass">TEAR</span>
+                                                    <span class="severity-badge severity-CRITICAL" id="hudDefectSeverity">CRITICAL</span>
+                                                </div>
+                                                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px" id="hudDefectDetails">
+                                                    Conf: 94.2% | Length: 24.5cm | RUL -15.0h
+                                                </div>
+                                            </div>
+
+                                            <!-- Bottom Info Overlay -->
+                                            <div class="video-overlay" id="playbackOverlay">
+                                                <span id="playbackTimeDisplay">00:00 / 00:00</span>
+                                                <span id="playbackFrameDisplay">Frame: 0</span>
+                                                <span id="playbackDetectionsCount">Detections: 0</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Playback Controls Bar -->
+                                        <div class="playback-controls-bar">
+                                            <button class="btn btn-primary btn-sm" id="btnPlayPause" onclick="toggleVideoPlayback()">
+                                                ▶ Play
+                                            </button>
+                                            <button class="btn btn-outline btn-sm" onclick="restartVideoPlayback()" title="Restart from beginning">
+                                                ⏮
+                                            </button>
+                                            
+                                            <div class="playback-timeline-wrapper">
+                                                <div class="playback-timeline-markers" id="timelineMarkers" title="Color-coded defect locations. Click to jump."></div>
+                                                <input type="range" class="playback-seek-range" id="videoSeekRange" min="0" max="100" value="0" step="0.1" oninput="onVideoSeek(this.value)">
+                                            </div>
+                                            
+                                            <div class="btn-group" style="align-items:center;gap:3px">
+                                                <span style="font-size:11px;color:var(--text-muted)">Speed:</span>
+                                                <button class="speed-chip" onclick="setPlaybackSpeed(0.5, this)">0.5x</button>
+                                                <button class="speed-chip active" onclick="setPlaybackSpeed(1.0, this)">1.0x</button>
+                                                <button class="speed-chip" onclick="setPlaybackSpeed(1.5, this)">1.5x</button>
+                                                <button class="speed-chip" onclick="setPlaybackSpeed(2.0, this)">2.0x</button>
+                                            </div>
+
+                                            <div style="display:flex;align-items:center;gap:10px;margin-left:auto;flex-wrap:wrap">
+                                                <label style="font-size:11px;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--text-secondary)">
+                                                    <input type="checkbox" id="chkSyncTwin" checked> ⚡ Live Twin Sync
+                                                </label>
+                                                <label style="font-size:11px;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--text-secondary)">
+                                                    <input type="checkbox" id="chkBoxes" checked> 🔲 Boxes
+                                                </label>
+                                                <label style="font-size:11px;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--text-secondary)">
+                                                    <input type="checkbox" id="chkAudioAlert" checked> 🔔 Alert
+                                                </label>
+                                                <button class="btn btn-outline btn-sm" onclick="exportDetectionReport('csv')">
+                                                    📥 CSV
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Summary & Real-Time Impact -->
+                                <div class="panel">
+                                    <div class="panel-header">
+                                        <div class="panel-title">Inspection Summary & Health Impact</div>
+                                    </div>
+                                    <div class="panel-body" id="videoSummary"></div>
+                                </div>
+                            </div>
+
+                            <!-- Detection Event Log Table -->
+                            <div class="panel" style="margin-top:16px">
+                                <div class="panel-header">
+                                    <div class="panel-title">📋 Defect Event Log (Click any row to jump in video)</div>
+                                    <div style="font-size:var(--text-xs);color:var(--text-muted)" id="videoEventCount">0 events</div>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="data-table" id="videoEventTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Time</th>
+                                                <th>Frame</th>
+                                                <th>Defect Class</th>
+                                                <th>Severity</th>
+                                                <th>Confidence</th>
+                                                <th>Estimated Size</th>
+                                                <th>RUL Degradation</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="videoEventBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: Live Monitor ═══ -->
+            <div class="tab-content" id="tab-live-monitor">
+                <div class="kpi-grid">
+                    <div class="kpi-card health">
+                        <div class="kpi-label">Health Score</div>
+                        <div class="kpi-value" id="monHealth">100</div>
+                        <div class="kpi-sub" id="monFailProb">Failure prob: 0%</div>
+                    </div>
+                    <div class="kpi-card rul">
+                        <div class="kpi-label">RUL</div>
+                        <div class="kpi-value" id="monRUL">500h</div>
+                        <div class="kpi-sub" id="monRULCI">CI: 400 – 600h</div>
+                    </div>
+                    <div class="kpi-card alert">
+                        <div class="kpi-label">Anomaly Score</div>
+                        <div class="kpi-value" id="monAnomaly">0.000</div>
+                        <div class="kpi-sub">Kalman residual fusion</div>
+                    </div>
+                    <div class="kpi-card events">
+                        <div class="kpi-label">Belt Speed</div>
+                        <div class="kpi-value" id="monSpeed">3.15</div>
+                        <div class="kpi-sub">m/s</div>
+                    </div>
+                </div>
+
+                <!-- Belt Canvas -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🏭 Belt Visualization</div>
+                        <span style="font-size:var(--text-xs);color:var(--text-muted)" id="beltPosLabel">Position: 0m</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="belt-canvas-container">
+                            <canvas id="beltCanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telemetry -->
+                <div class="grid-3">
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">🌡 Temperature</div></div>
+                        <div class="panel-body" style="text-align:center">
+                            <div class="gauge-container">
+                                <svg viewBox="0 0 120 120">
+                                    <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+                                    <circle class="gauge-fill" id="tempGauge" cx="60" cy="60" r="50" 
+                                            stroke-dasharray="314.16" stroke-dashoffset="250" stroke="var(--green)"/>
+                                </svg>
+                                <div class="gauge-value">
+                                    <div class="gauge-number" id="tempValue">35°</div>
+                                    <div class="gauge-label">Celsius</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">📳 Vibration</div></div>
+                        <div class="panel-body" style="text-align:center">
+                            <div class="gauge-container">
+                                <svg viewBox="0 0 120 120">
+                                    <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+                                    <circle class="gauge-fill" id="vibGauge" cx="60" cy="60" r="50" 
+                                            stroke-dasharray="314.16" stroke-dashoffset="280" stroke="var(--green)"/>
+                                </svg>
+                                <div class="gauge-value">
+                                    <div class="gauge-number" id="vibValue">3.0</div>
+                                    <div class="gauge-label">mm/s RMS</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">⚡ Tension</div></div>
+                        <div class="panel-body" style="text-align:center">
+                            <div class="gauge-container">
+                                <svg viewBox="0 0 120 120">
+                                    <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+                                    <circle class="gauge-fill" id="tensGauge" cx="60" cy="60" r="50" 
+                                            stroke-dasharray="314.16" stroke-dashoffset="200" stroke="var(--blue)"/>
+                                </svg>
+                                <div class="gauge-value">
+                                    <div class="gauge-number" id="tensValue">50kN</div>
+                                    <div class="gauge-label">Tight Side</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fault Injection -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🧪 Defect & Fault Simulation Controls</div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn-group" style="flex-wrap:wrap;gap:8px">
+                            <button class="btn btn-outline btn-sm" onclick="injectFault('crack')">⚡ Crack</button>
+                            <button class="btn btn-outline btn-sm" onclick="injectFault('tear')">🔴 Belt Tear</button>
+                            <button class="btn btn-outline btn-sm" onclick="injectFault('surface')">🕳️ Surface Gouge</button>
+                            <button class="btn btn-outline btn-sm" onclick="injectFault('splice')">🔗 Splice Gap</button>
+                            <button class="btn btn-outline btn-sm" onclick="injectFault('edge')">✂️ Edge Damage</button>
+                            <button class="btn btn-outline btn-sm" onclick="injectFault('bearing')">📳 Bearing Fault</button>
+                            <button class="btn btn-outline btn-sm" onclick="injectFault('overload')">⚡ Overload</button>
+                            <button class="btn btn-danger btn-sm" onclick="injectFault('reset')">🔄 Clear All Faults</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: Belt Health ═══ -->
+            <div class="tab-content" id="tab-belt-health">
+                <div class="grid-2">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">🔧 Belt Advisory</div>
+                        </div>
+                        <div class="panel-body">
+                            <div id="advisoryCard">
+                                <div class="advisory-badge advisory-NORMAL" id="advisoryBadge">NORMAL</div>
+                                <p style="margin-top:12px;font-size:var(--text-sm);color:var(--text-secondary)" id="advisoryMessage">
+                                    All parameters within IS 11592 limits
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">📐 IS 11592 Compliance</div>
+                        </div>
+                        <div class="panel-body">
+                            <table class="data-table" id="complianceTable">
+                                <thead><tr><th>Check</th><th>Value</th><th>Limit</th><th>Status</th></tr></thead>
+                                <tbody id="complianceBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">🔩 Tension Analysis</div></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr><td>Tight Side</td><td id="tensionTight">—</td></tr>
+                                    <tr><td>Slack Side</td><td id="tensionSlack">—</td></tr>
+                                    <tr><td>Safety Factor</td><td id="tensionSF">—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">📏 Belt Sag</div></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr><td>Sag Ratio</td><td id="sagRatio">—</td></tr>
+                                    <tr><td>IS 11592 Limit</td><td>≤ 2.0%</td></tr>
+                                    <tr><td>Status</td><td id="sagStatus">—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: Sensor Lifetime ═══ -->
+            <div class="tab-content" id="tab-sensor-lifetime">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📶 Sensor Lifetime Grid</div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="sensor-grid" id="sensorGrid"></div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📊 Rated vs Elapsed</div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="data-table" id="sensorTable">
+                            <thead>
+                                <tr><th>Sensor</th><th>Type</th><th>Location</th><th>Rated (h)</th><th>Elapsed (h)</th><th>Remaining</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="sensorTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: AI Explainability ═══ -->
+            <div class="tab-content" id="tab-ai-explainability">
+                <div class="grid-60-40">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">🤖 SHAP Feature Contributions</div>
+                        </div>
+                        <div class="panel-body" id="shapChart"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">📊 RUL Ensemble</div>
+                        </div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr><td>RUL Estimate</td><td id="rulEstimate">—</td></tr>
+                                    <tr><td>Source</td><td id="rulSource">—</td></tr>
+                                    <tr><td>90% CI Lower</td><td id="rulCILow">—</td></tr>
+                                    <tr><td>90% CI Upper</td><td id="rulCIHigh">—</td></tr>
+                                    <tr><td>Budget Remaining</td><td id="rulBudget">—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📝 Damage Event Log</div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="data-table" id="damageLogTable">
+                            <thead>
+                                <tr><th>ID</th><th>Type</th><th>Severity</th><th>Confidence</th><th>Size</th><th>RUL Impact</th><th>Time</th></tr>
+                            </thead>
+                            <tbody id="damageLogBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: Physics Engine ═══ -->
+            <div class="tab-content" id="tab-physics-engine">
+                <div class="grid-2">
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">📐 Kalman Filter State</div></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <thead><tr><th>Channel</th><th>Estimated</th><th>Residual</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Tension</td><td id="kfTension">—</td><td id="kfTensionR">—</td></tr>
+                                    <tr><td>Vibration</td><td id="kfVibration">—</td><td id="kfVibrationR">—</td></tr>
+                                    <tr><td>Temperature</td><td id="kfTemperature">—</td><td id="kfTemperatureR">—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">⚡ Kinematics</div></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr><td>Belt Speed</td><td id="physSpeed">—</td></tr>
+                                    <tr><td>Position</td><td id="physPosition">—</td></tr>
+                                    <tr><td>Load Fraction</td><td id="physLoad">—</td></tr>
+                                    <tr><td>Motor Power</td><td id="physPower">—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">📳 Vibration Model</div></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr><td>RMS Velocity</td><td id="physVibRMS">—</td></tr>
+                                    <tr><td>Measured</td><td id="physVibMeas">—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">🌡 Thermal Model</div></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr><td>Current</td><td id="physTempCurr">—</td></tr>
+                                    <tr><td>Measured</td><td id="physTempMeas">—</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: Reports ═══ -->
+            <div class="tab-content" id="tab-reports">
+                <!-- Action Hub Panel -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📋 Industrial Diagnostic Reports & Export Center</div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="generateAndSaveReportSnapshot()">
+                                💾 Generate & Save Snapshot
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <p style="color:var(--text-secondary);margin-bottom:16px;font-size:var(--text-sm)">
+                            Generate certified engineering diagnostic reports adhering to IS 11592, DIN 22101, and ISO 15236 standards. Includes plain-English guidance for shift operators, AI SHAP feature risk attribution, and multi-format exports.
+                        </p>
+                        <div class="btn-group" style="flex-wrap:wrap;gap:10px">
+                            <button class="btn btn-primary" onclick="previewLiveHtmlReport()">
+                                🌐 Preview Live HTML Report
+                            </button>
+                            <button class="btn btn-outline" onclick="window.open('/api/report/html','_blank')">
+                                ↗️ Open Full HTML in New Tab
+                            </button>
+                            <a href="/api/report/pdf" class="btn btn-outline" download>
+                                📄 Download PDF Report
+                            </a>
+                            <a href="/api/report/jpeg" class="btn btn-outline" download>
+                                🖼️ Download JPEG Sheet
+                            </a>
+                            <button class="btn btn-outline" onclick="printReportIframe()">
+                                🖨️ Print Report
+                            </button>
+                            <button class="btn btn-outline" onclick="window.open('/api/state','_blank')">
+                                📊 Raw State JSON
+                            </button>
+                            <button class="btn btn-outline" onclick="window.open('/api/history?limit=50','_blank')">
+                                📈 History Log
+                            </button>
+                        </div>
+                        <div id="reportSaveStatus" style="margin-top:12px;font-size:var(--text-xs);color:var(--green);display:none"></div>
+                    </div>
+                </div>
+
+                <!-- Plain-English Operator Guide Card -->
+                <div class="panel" style="border-left:4px solid var(--green)">
+                    <div class="panel-header">
+                        <div class="panel-title">📖 Operator Plain-English Quick Guide</div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="grid-3" style="gap:16px">
+                            <div style="background:var(--surface-2);padding:14px;border-radius:var(--radius-sm)">
+                                <div style="font-weight:700;font-size:var(--text-sm);color:var(--green);margin-bottom:6px">🟢 Health Score</div>
+                                <p style="font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5">
+                                    Combines visual AI defect detections with real-time sensor vibrations and tensions. Above 80% means standard operation is completely safe. Below 50% requires booking a vulcanizing repair window.
+                                </p>
+                            </div>
+                            <div style="background:var(--surface-2);padding:14px;border-radius:var(--radius-sm)">
+                                <div style="font-weight:700;font-size:var(--text-sm);color:var(--blue);margin-bottom:6px">⏳ Remaining Useful Life (RUL)</div>
+                                <p style="font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5">
+                                    Predicts estimated operating hours left before the belt reaches critical wear threshold. Dual-source engine projects linear degradation trend and subtracts cumulative defect damage penalties.
+                                </p>
+                            </div>
+                            <div style="background:var(--surface-2);padding:14px;border-radius:var(--radius-sm)">
+                                <div style="font-weight:700;font-size:var(--text-sm);color:var(--amber);margin-bottom:6px">⚠️ Defect Priority Rule</div>
+                                <p style="font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5">
+                                    <strong>TEAR / SPLICE GAP</strong> require immediate stop or emergency clamp patch. <strong>CRACK / SURFACE DAMAGE</strong> can be sealed with cold-cure rubber patch during lunch stoppage.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Report Embedded Preview Pane -->
+                <div class="panel" id="reportPreviewPanel">
+                    <div class="panel-header">
+                        <div class="panel-title">📄 Embedded HTML Diagnostic Report Preview</div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline btn-sm" onclick="refreshReportPreview()">🔄 Refresh Preview</button>
+                            <button class="btn btn-outline btn-sm" onclick="toggleReportFullscreen()">⛶ Expand</button>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="padding:0">
+                        <iframe id="reportIframe" src="/api/report/html" style="width:100%;height:650px;border:none;background:#ffffff;border-radius:0 0 var(--radius-md) var(--radius-md)"></iframe>
+                    </div>
+                </div>
+
+                <!-- Saved Reports Archive -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📜 Saved Diagnostic Report Snapshots</div>
+                        <button class="btn btn-outline btn-sm" onclick="loadSavedReportsList()">🔄 Refresh List</button>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Report ID</th>
+                                    <th>Created At</th>
+                                    <th>Size</th>
+                                    <th>HTML Format</th>
+                                    <th>PDF Format</th>
+                                    <th>JPEG Sheet</th>
+                                </tr>
+                            </thead>
+                            <tbody id="savedReportsTbody">
+                                <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:16px">Loading saved reports...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TAB: Maintenance ═══ -->
+            <div class="tab-content" id="tab-maintenance">
+                <div class="grid-2">
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">🔩 Log Maintenance Event</div></div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="form-label">Event Type</label>
+                                <select class="form-input" id="maintType">
+                                    <option value="inspection">Inspection</option>
+                                    <option value="repair">Repair</option>
+                                    <option value="replacement">Replacement</option>
+                                    <option value="lubrication">Lubrication</option>
+                                    <option value="calibration">Calibration</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <input type="text" class="form-input" id="maintDesc" placeholder="Describe the maintenance activity...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Performed By</label>
+                                <input type="text" class="form-input" id="maintBy" placeholder="Technician name">
+                            </div>
+                            <button class="btn btn-primary" onclick="logMaintenance()">📝 Log Event</button>
+                            <div id="maintResult" style="margin-top:12px;font-size:var(--text-xs);color:var(--green)"></div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div class="panel-title">📋 Recommendations</div></div>
+                        <div class="panel-body" id="maintRecommendations">
+                            <div class="detection-item">
+                                <div class="detection-info">
+                                    <div class="detection-type">Scheduled Inspection</div>
+                                    <div class="detection-details">Next inspection recommended based on current health trajectory</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="/static/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# Physics model parameters
+physics:
+  kalman:
+    process_noise: 0.01
+    measurement_noise: 0.1
+    initial_estimate: 0.0
+    initial_error: 1.0
+
+  vibration:
+    mass_kg: 50.0
+    stiffness_N_m: 200000.0
+    damping_Ns_m: 500.0
+
+  thermal:
+    heat_transfer_coeff: 25.0
+    surface_area_m2: 2.0
+    thermal_mass_J_K: 50000.0
+
+  friction:
+    coefficient: 0.025
+    elevation_m: 0.0
+    
+  degradation:
+    health_threshold: 40.0
+    rul_budget_hours: 500.0

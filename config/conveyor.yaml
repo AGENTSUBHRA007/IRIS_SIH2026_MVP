@@ -1,0 +1,44 @@
+# Conveyor physical parameters — IS 11592:2000 compliant
+conveyor:
+  belt:
+    length_m: 500
+    width_mm: 1200
+    speed_mps: 3.15
+    breaking_strength_kN: 800
+    mass_per_meter_kg: 18.5
+    troughing_angle_deg: 35
+    belt_type: "EP 400/4"
+
+  pulleys:
+    drive:
+      diameter_mm: 630
+      wrap_angle_deg: 210
+      friction_coefficient: 0.35
+    tail:
+      diameter_mm: 500
+      wrap_angle_deg: 180
+
+  idlers:
+    spacing_carry_m: 1.2
+    spacing_return_m: 3.0
+    roller_diameter_mm: 127
+    bearing_type: "6205-2RS"
+
+  material:
+    density_kg_m3: 1600
+    max_capacity_tph: 2000
+    angle_of_repose_deg: 38
+    surcharge_angle_deg: 20
+
+  motor:
+    rated_power_kW: 250
+    rated_speed_rpm: 1480
+    efficiency: 0.92
+
+  environment:
+    ambient_temperature_c: 35
+    altitude_m: 500
+
+  safety:
+    min_safety_factor: 8.0
+    max_sag_pct: 2.0

@@ -1,0 +1,65 @@
+# Sensor registry for Digital Twin
+sensors:
+  TEMP-01:
+    type: "temperature"
+    location: "drive_pulley_bearing"
+    unit: "°C"
+    range: [0, 200]
+    rated_life_hours: 20000
+    sampling_hz: 1
+
+  TEMP-02:
+    type: "temperature"
+    location: "belt_surface"
+    unit: "°C"
+    range: [0, 150]
+    rated_life_hours: 25000
+    sampling_hz: 1
+
+  VIB-01:
+    type: "vibration"
+    location: "drive_pulley"
+    unit: "mm/s"
+    range: [0, 100]
+    rated_life_hours: 30000
+    sampling_hz: 100
+
+  VIB-02:
+    type: "vibration"
+    location: "tail_pulley"
+    unit: "mm/s"
+    range: [0, 100]
+    rated_life_hours: 30000
+    sampling_hz: 100
+
+  TENS-01:
+    type: "tension"
+    location: "tight_side"
+    unit: "kN"
+    range: [0, 500]
+    rated_life_hours: 40000
+    sampling_hz: 10
+
+  TENS-02:
+    type: "tension"
+    location: "slack_side"
+    unit: "kN"
+    range: [0, 200]
+    rated_life_hours: 40000
+    sampling_hz: 10
+
+  SPEED-01:
+    type: "speed"
+    location: "drive_pulley_encoder"
+    unit: "m/s"
+    range: [0, 6]
+    rated_life_hours: 50000
+    sampling_hz: 10
+
+  LOAD-01:
+    type: "load"
+    location: "feed_chute"
+    unit: "tph"
+    range: [0, 3000]
+    rated_life_hours: 35000
+    sampling_hz: 1

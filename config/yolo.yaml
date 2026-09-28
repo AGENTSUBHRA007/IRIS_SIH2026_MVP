@@ -1,0 +1,17 @@
+yolo:
+  model_path: "models/best.pt"
+  confidence_threshold: 0.12
+  iou_threshold: 0.50
+  image_size: 640
+  device: "auto"
+  
+  class_mapping:
+    0: "CRACK"
+    1: "TEAR"
+    2: "SURFACE_DAMAGE"
+    3: "SURFACE_WEAR"
+    4: "SPLICE_GAP"
+    5: "EDGE_DAMAGE"
+    6: "FOREIGN_OBJECT"
+  
+  pixels_to_cm_ratio: 0.15

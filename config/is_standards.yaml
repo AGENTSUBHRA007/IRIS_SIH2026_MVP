@@ -1,0 +1,41 @@
+# IS 11592:2000 and IS 8598:1987 standard reference tables
+is_standards:
+  is_11592:
+    description: "Selection and Design of Belt Conveyors — Code of Practice"
+    year: 2000
+    
+    cross_section:
+      troughing_35_factor: 0.11
+      
+    friction_factors:
+      well_maintained: 0.020
+      average: 0.025
+      poor: 0.030
+      
+    max_sag_ratio_pct: 2.0
+    
+    safety_factors:
+      textile_belt_min: 8.0
+      textile_belt_recommended: 10.0
+      steel_cord_min: 6.7
+      
+    belt_speed_limits_mps:
+      bulk_ore: 4.0
+      fine_material: 2.5
+      
+    idler_spacing:
+      carry_side_m: [1.0, 1.2, 1.5]
+      return_side_m: [3.0, 3.5]
+      
+  is_8598:
+    description: "Code of Practice for Idlers for Belt Conveyors"
+    year: 1987
+    
+    roller_load_limits:
+      light_duty_N: 500
+      medium_duty_N: 1200
+      heavy_duty_N: 2500
+      
+    bearing_types:
+      standard: "6205-2RS"
+      heavy: "6305-2RS"
