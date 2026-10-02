@@ -6,8 +6,7 @@
 
 <p align="center">
   <strong>Team:</strong> EcoNova &nbsp;|&nbsp;
-  <strong>Competition:</strong> Smart India Hackathon 2026 &nbsp;|&nbsp;
-  <strong>Problem Statement:</strong> SIH26008
+  <strong>Competition:</strong> Smart India Hackathon 2026
 </p>
 
 ---
