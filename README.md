@@ -32,7 +32,7 @@ IRIS is deliberately developed in stages. The **SIH MVP proves the inspection wo
 - [1. Project Motivation](#1-project-motivation)
 - [2. MVP Objective](#2-mvp-objective)
 - [3. Current MVP vs Roadmap](#3-current-mvp-vs-roadmap)
-- [4. Real Conveyor-Belt Detection Samples](#4-real-conveyor-belt-detection-samples)
+- [4. Real Conveyor-Belt Detection and Defect Samples](#4-real-conveyor-belt-detection-and-defect-samples)
 - [5. System Architecture](#5-system-architecture)
 - [6. End-to-End MVP Data Flow](#6-end-to-end-mvp-data-flow)
 - [7. Visual Detection Pipeline](#7-visual-detection-pipeline)
@@ -167,12 +167,22 @@ Clear separation between implemented/demo capability and future industrial valid
 
 ---
 
-# 4. Real Conveyor-Belt Detection Samples
+# 4. Real Conveyor-Belt Detection and Defect Samples
 
-The following collage contains the **21 real conveyor-belt images supplied for the MVP evaluation/demo set**. The detector overlays are retained from the supplied images.
+### 4.1 Real Detection Samples (MVP Evaluation Set)
+
+The following collage contains the **21 real conveyor-belt images supplied for the MVP evaluation/demo set**. The detector overlays are retained from the supplied images:
 
 <p align="center">
   <img src="assets/real_detection_collage.jpg" alt="IRIS real conveyor belt detection samples" width="900"/>
+</p>
+
+### 4.2 Industrial Conveyor Belt Defect Inspection Collage
+
+The following inspection collage illustrates industrial conveyor belt defect patterns, surface abrasions, longitudinal tears, splice anomalies, and structural damage analyzed under the IRIS condition-monitoring framework:
+
+<p align="center">
+  <img src="assets/IRIS_conveyor_defect_collage_github.jpg" alt="IRIS conveyor belt defect inspection collage" width="900"/>
 </p>
 
 ### Important interpretation note
