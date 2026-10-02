@@ -32,7 +32,7 @@ IRIS is deliberately developed in stages. The **SIH MVP proves the inspection wo
 - [1. Project Motivation](#1-project-motivation)
 - [2. MVP Objective](#2-mvp-objective)
 - [3. Current MVP vs Roadmap](#3-current-mvp-vs-roadmap)
-- [4. Real Conveyor-Belt Detection and Defect Samples](#4-real-conveyor-belt-detection-and-defect-samples)
+- [4. Real Conveyor-Belt Detection, Defect Samples & System Video](#4-real-conveyor-belt-detection-defect-samples--system-video)
 - [5. System Architecture](#5-system-architecture)
 - [6. End-to-End MVP Data Flow](#6-end-to-end-mvp-data-flow)
 - [7. Visual Detection Pipeline](#7-visual-detection-pipeline)
@@ -167,7 +167,7 @@ Clear separation between implemented/demo capability and future industrial valid
 
 ---
 
-# 4. Real Conveyor-Belt Detection and Defect Samples
+# 4. Real Conveyor-Belt Detection, Defect Samples & System Video
 
 ### 4.1 Real Detection Samples (MVP Evaluation Set)
 
@@ -184,6 +184,18 @@ The following inspection collage illustrates industrial conveyor belt defect pat
 <p align="center">
   <img src="assets/IRIS_conveyor_defect_collage_github.jpg" alt="IRIS conveyor belt defect inspection collage" width="900"/>
 </p>
+
+### 4.3 End-to-End System Video Demonstration
+
+Watch the complete IRIS inspection workflow in action — demonstrating real-time conveyor vision inference, bounding-box defect localization, temporal defect tracking, Digital Twin state telemetry, and maintenance risk estimation:
+
+<p align="center">
+  <video src="assets/IRIS_system_demo.mp4" controls="controls" width="100%" style="max-width: 900px; border-radius: 8px;">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+> 📹 **Video Stream / Direct Link**: [`assets/IRIS_system_demo.mp4`](assets/IRIS_system_demo.mp4)
 
 ### Important interpretation note
 

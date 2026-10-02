@@ -32,4 +32,5 @@ data/uploads/*
 # Ensure assets and documentation images are tracked
 !assets/
 !assets/*
-
+# Raw uncompressed video exports (>100MB)
+export-*.mp4
